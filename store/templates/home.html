@@ -1,0 +1,37 @@
+{% extends "base.html" %} 
+{% block title %}HomePage{% endblock %} 
+{% block content %}
+
+<div class="container">
+    <h1 class='my-2'>Available Books</h1>
+    <div class="row">
+        <div class="col-lg-2">
+            <ul class="list-group">
+                {% for category in categories %}
+                    <a href="/?category={{category.id}}" class="list-group-item">{{category.name}}</a>
+                {% endfor %}
+                <a href="/" class='list-group-item'>View All</a>
+              </ul>
+        </div>
+        <div class="col-lg-10 mx-auto">
+            <div class="row mx-auto">
+                {% for book in books %}
+                <div class="card mx-auto mb-4" style="width: 14rem">
+                    <img src="{{book.book_image.url}}" style="height:250px" class="card-img-top" alt="..." />
+
+                    <div class="card-body">
+                    <h5 class="card-title">{{book.title}}</h5>
+                    <p class="card-text">
+                        {{book.description}}
+                    </p>
+                    <small>Price - {{book.price}}</small>
+                    <small class='float-end'>By : {{book.writer}}</small>
+                    <a href="#" class="btn btn-outline-primary mt-3">Add to cart</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+  </div>
+</div>
+{% endblock %}
