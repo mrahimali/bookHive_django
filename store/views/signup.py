@@ -41,7 +41,7 @@ class SignUp(View):
             if password==cpassword:
                 user.password=make_password(user.password)
                 user.registerUser()
-                return redirect('homepage')
+                return redirect('login')
                 
 
             else:

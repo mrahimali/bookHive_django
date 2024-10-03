@@ -54,5 +54,9 @@ class BookInfo(models.Model):
         return BookInfo.objects.all()
     
     @staticmethod
+    def get_books_by_ids(ids):
+        return BookInfo.objects.filter(id__in=ids)
+    
+    @staticmethod
     def get_books_by_category(category_id):
         return BookInfo.objects.filter(category=category_id)

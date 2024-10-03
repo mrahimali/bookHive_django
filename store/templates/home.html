@@ -2,6 +2,7 @@
 {% block title %}HomePage{% endblock %} 
 {% block content %}
 
+{% load cartFilter %}
 <div class="container">
     <h1 class='my-2'>Available Books</h1>
     <div class="row">
@@ -14,23 +15,65 @@
               </ul>
         </div>
         <div class="col-lg-10 mx-auto">
-            <div class="row mx-auto">
+            <div class="row mx-auto justify-content-center">
                 {% for book in books %}
-                <div class="card mx-auto mb-4" style="width: 14rem">
-                    <img src="{{book.book_image.url}}" style="height:250px" class="card-img-top" alt="..." />
-
-                    <div class="card-body">
-                    <h5 class="card-title">{{book.title}}</h5>
-                    <p class="card-text">
-                        {{book.description}}
-                    </p>
-                    <small>Price - {{book.price}}</small>
-                    <small class='float-end'>By : {{book.writer}}</small>
-                    <a href="#" class="btn btn-outline-primary mt-3">Add to cart</a>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card shadow-sm h-100" style="width: 100%;">
+                        <!-- Book Image -->
+                        <img src="{{book.book_image.url}}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Book Image">
+            
+                        <!-- Card Body -->
+                        <div class="card-body d-flex flex-column">
+                            <!-- Book Title -->
+                            <h5 class="card-title text-center">{{book.title}}</h5>
+            
+                            <!-- Book Description -->
+                            <p class="card-text">
+                                {{book.description|slice:":100"}}... <!-- Display 100 characters and add ellipsis -->
+                            </p>
+            
+                            <!-- Book Price and Author -->
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">Price: {{book.price}}</small>
+                                <small class="text-muted">By: {{book.writer}}</small>
+                            </div>
+            
+                            <!-- Add to Cart / Increment/Decrement Button -->
+                            <div class="mt-auto">
+                                {% if book|is_in_cart:request.session.cart %}
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Increment Button -->
+                                    <form action="/#{{book.id}}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="increment" value="{{book.id}}">
+                                        <input type="submit" class="btn btn-sm btn-outline-info" value="+">
+                                    </form>
+            
+                                    <!-- Cart Quantity -->
+                                    <span class="badge bg-info text-white">{{book|cart_quantity:request.session.cart}}</span>
+            
+                                    <!-- Decrement Button -->
+                                    <form action="/" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="decrement" value="{{book.id}}">
+                                        <input type="submit" class="btn btn-sm btn-outline-info" value="-">
+                                    </form>
+                                </div>
+                                {% else %}
+                                <!-- Add to Cart Button -->
+                                <form action="/" method="POST" class="d-grid mt-3">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="book_id" value="{{book.id}}">
+                                    <input type="submit" class="btn btn-info text-white" value="Add to Cart">
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
+            
         </div>
   </div>
 </div>
