@@ -12,6 +12,9 @@ class UserDetail(models.Model):
     user_type=models.CharField(max_length=6,choices= userType, default='SELLER')
     password=models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
     def registerUser(self):
         self.save()
@@ -48,6 +51,7 @@ class BookInfo(models.Model):
     category=models.ForeignKey(Category, on_delete=models.CASCADE)
     book_image=models.ImageField(upload_to='upload/books/')
     writer=models.CharField(max_length=100, default='')
+    uploaded_by=models.ForeignKey(UserDetail, on_delete=models.CASCADE, default=1)
 
     @staticmethod
     def get_all_books():
@@ -57,6 +61,14 @@ class BookInfo(models.Model):
     def get_books_by_ids(ids):
         return BookInfo.objects.filter(id__in=ids)
     
+
+
+    @staticmethod
+    def get_books_by_owner_id(id):
+        return BookInfo.objects.filter(uploaded_by=id)
+    
+
+
     @staticmethod
     def get_books_by_category(category_id):
         return BookInfo.objects.filter(category=category_id)

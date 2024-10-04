@@ -7,7 +7,9 @@ from store.models import BookInfo , Category
 class home(View):
     def post(self, request):
         book_id = request.POST.get('book_id') or request.POST.get('increment') or request.POST.get('decrement')
-        cart = request.session.get('cart')
+        
+
+        cart = request.session.get('cart', {})
 
         if book_id:
             if request.POST.get('decrement'):
@@ -21,6 +23,7 @@ class home(View):
 
         request.session['cart'] = cart
         print(request.session['cart'])
+
         return redirect('/')
 
 

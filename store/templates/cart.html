@@ -1,7 +1,72 @@
-{% extends "base.html" %}
-
+{% extends "base.html" %} 
 {% block content %}
-{% for book in books %}
-{{book.title}}
-{% endfor %}
+{% load cartFilter %}
+<div class="container my-5">
+  <div class="border card-body mx-auto" style="width: 80%;">
+    
+    <div class='d-flex justify-content-between'>
+        <div>
+            <p class="fs-1 ">Your Cart</p>
+        </div>
+        <div class='mt-4'>
+            <a href="" class='fs-6 float-end btn btn-info'>CheckOut</a>
+            <p class="fs-5 float-end"> Grand Total - {{books|grandTotal:request.session.cart}} | &nbsp;</p>
+        </div>
+    </div>
+    <hr>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Book Image</th>
+            <th scope="col">Title </th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+         {% for book in books %}
+
+         <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td><img src="{{book.book_image.url}}" class="card-img-top" style="width:100px" alt="..." /></td>
+            <td>{{book.title}}</td>
+            <td>{{book.price|price_symbol}}</td>
+            <td>
+                <div class='d-flex'>
+                    <div class='me-2'>
+                        <form action="/cart/" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="increment" value="{{book.id}}">
+                            <input type="submit" value="+" class="fs-3 btn p-0 border-0 text-decoration-none">
+                        </form>
+                    </div>
+                    <div>
+                         <!-- Cart Quantity -->
+                        <span class="mt-3 badge bg-info text-white">{{book|cart_quantity:request.session.cart}}</span>
+                    </div>
+                    <div class='ms-2'>
+                        <form action="/cart/" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="decrement" value="{{book.id}}">
+                            <input type="submit" value="-" class="fs-3 btn p-0 border-0 text-decoration-none">
+                        </form>
+                    </div>
+                </div>
+
+               
+                
+            </td>
+            <td>{{book.id|get_no_of_item:request.session.cart|total_price:book.price|price_symbol}}</td>
+          </tr>
+         {% endfor %}
+          
+        </tbody>
+    </table>
+    
+   
+    <hr>
+  </div>
+</div>
 {% endblock %}
