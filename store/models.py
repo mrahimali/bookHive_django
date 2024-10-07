@@ -53,6 +53,10 @@ class BookInfo(models.Model):
     writer=models.CharField(max_length=100, default='')
     uploaded_by=models.ForeignKey(UserDetail, on_delete=models.CASCADE, default=1)
 
+
+    def add_book(self):
+        self.save()
+
     @staticmethod
     def get_all_books():
         return BookInfo.objects.all()

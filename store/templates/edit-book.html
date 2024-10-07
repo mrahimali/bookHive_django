@@ -1,0 +1,59 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class="container mx-auto">
+  <div class="row justify-content-center">
+    <div class="col-4 bg-dark text-white border border-1 my-5">
+      <h1 class='text-center'>Edit Book</h1>
+      <div class="mx-auto px-2 py-3">
+        <form method="POST" action="{% url 'edit-book' book.id %}" method='POST'>
+          {% csrf_token %}
+          {% if error_message %}
+          <div class="alert alert-danger" role="alert">
+            {{error_message}}
+          </div>
+          {% endif %}
+          <div class="mb-1">
+            <label for="name" class="form-label">Title</label>
+            <input type="text" class="form-control" name='title' id="title" value="{{ book.title}}" />
+          </div>
+          <div class="mb-1">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" value="{{ book.price}}"  name='price' id="price" />
+          </div>
+          <div class="mb-1">
+            <label for="Description" class="form-label">Description</label>
+            <input type="text" class="form-control" value="{{ book.description}}" name='description' id="Description" />
+          </div>
+          <div class="mb-1">
+            <label for="Category" class="form-label">Category</label>
+            <select class="form-select" value="{{values.account_type}}" name='category' aria-label="Default select example" id='Category'>
+              {% for cat in category %}
+              
+              <option value="{{ cat.id }}" {% if book and book.category == cat.id %}selected{% endif %}>{{ cat.name }}</option>
+
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-1">
+                <label for="image" class="form-label">Book Image</label>
+                <input type="file" class="form-control" name="book_image" id="image" />
+            </div>
+            
+            {% if book.book_image %}
+                <div class="mt-2">
+                    <img src="{{ book.book_image.url }}" alt="Current Book Image" class="img-thumbnail" style="max-width: 200px;">
+                </div>
+            {% endif %}
+        
+          <div class="mb-1">
+            <label for="writer" class="form-label">Writer Name</label>
+            <input type="text" class="form-control" name='writer' id="writer" value="{{ book.writer}}" />
+          </div>
+          
+          <button type="submit" class="btn mt-1 btn-primary">Update Book Info </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
