@@ -18,14 +18,14 @@
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="/">Home</a>
               <a class="nav-link active" href="/profile/">Profile</a>
-              {% if request.session.userRole == 'SELLER' %}
-              <a class="nav-link active" href="#">YourOrders</a>
-              {% endif %}
+              <a class="nav-link active" href="#">Your Order</a>
             </div>
           </div>
           <div class="float-end">
             <div class="navbar-nav">
+                {% if request.session.cart %}
                 <a class="nav-link active" href="/cart/">Cart <span class='badge bg-info'>{{request.session.cart.keys|length}}</span></a>
+                {% endif %}
                 <a class="nav-link active" href="#">Orders</a>
                 
                 

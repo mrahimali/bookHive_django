@@ -24,7 +24,7 @@ class EditBook(View):
             book.book_image = request.FILES['book_image']
 
         book.save()
-        return redirect('homepage')
+        return redirect('profile')
 
 
 class AddBook(View):

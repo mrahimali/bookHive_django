@@ -24,14 +24,14 @@
             <label for="phone" class="form-label">Phone</label>
             <input type="number" class="form-control" value="{{values.phone}}" name='phone' id="phone" />
           </div>
-          <div class="mb-1">
+          {% comment %} <div class="mb-1">
             <label for="usertype" class="form-label">Account Type</label>
             <select class="form-select" value="{{values.account_type}}" name='account_type' aria-label="Default select example">
               <option selected>Select Type </option>
               <option value="SELLER">Seller</option>
               <option value="BUYER">Buyer</option>
             </select>
-          </div>
+          </div> {% endcomment %}
           <div class="mb-1">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" name='password' id="password" />

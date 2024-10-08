@@ -25,11 +25,11 @@
             <input type="number" class="form-control" value="{{user.phone}}" name='phone' id="phone" />
           </div>
           <div class="mb-1">
-            <label for="usertype" class="form-label">Account Type</label>
+            {% comment %} <label for="usertype" class="form-label">Account Type</label>
                 <select class="form-select" name='account_type' aria-label="Default select example">
                     <option value="SELLER" {% if user.account_type == "SELLER" %}selected{% endif %}>Seller</option>
                     <option value="BUYER" {% if user.account_type == "BUYER" %}selected{% endif %}>Buyer</option>
-                </select>
+                </select> {% endcomment %}
             </div>
         
           <button type="submit" class="btn mt-1 btn-primary">Update Info</button>

@@ -16,7 +16,7 @@ class SignUp(View):
         name=postData.get('name')
         email=postData.get('email')
         phone=postData.get('phone')
-        account_type=postData.get('account_type')
+        # account_type=postData.get('account_type')
         password=postData.get('password')
         cpassword=postData.get('cpassword')
 
@@ -24,7 +24,7 @@ class SignUp(View):
             'name':name,
             'email':email,
             'phone':phone,
-            'user_type':account_type
+            # 'user_type':account_type
         }
 
 
@@ -33,7 +33,7 @@ class SignUp(View):
             phone=phone,
             email= email,
             password=password,
-            user_type=account_type
+            # user_type=account_type
         )
         error_message=self.validateUser(user)
 
@@ -69,7 +69,7 @@ class SignUp(View):
             error_message='Phone number required'
         elif len(user.phone)<10 or len(user.phone)>14:
             error_message="Invalid Phone number !!!"
-        elif not user.user_type:
-            error_message="Please select account type !!!"
+        # elif not user.user_type:
+            # error_message="Please select account type !!!"
 
         return error_message

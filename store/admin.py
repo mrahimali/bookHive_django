@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, BookInfo, UserDetail
+from .models import Category, BookInfo, UserDetail, ShippingAddresses
 
 # Register your models here.
 class CategoryAdmin(admin.ModelAdmin):
@@ -25,3 +25,10 @@ class UserDetailAdmin(admin.ModelAdmin):
     list_display=['name', 'email', 'phone']
 
 admin.site.register(UserDetail, UserDetailAdmin)
+
+
+
+class ShippingAddressAdmin(admin.ModelAdmin):
+    list_display=['address']
+
+admin.site.register(ShippingAddresses, ShippingAddressAdmin)

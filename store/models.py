@@ -9,7 +9,7 @@ class UserDetail(models.Model):
     name=models.CharField(max_length=100)
     email=models.CharField(max_length=50)
     phone=models.CharField(max_length=13)
-    user_type=models.CharField(max_length=6,choices= userType, default='SELLER')
+    # user_type=models.CharField(max_length=6,choices= userType, default='SELLER')
     password=models.CharField(max_length=100)
 
     def __str__(self):
@@ -76,3 +76,18 @@ class BookInfo(models.Model):
     @staticmethod
     def get_books_by_category(category_id):
         return BookInfo.objects.filter(category=category_id)
+
+
+class ShippingAddresses(models.Model):
+    address = models.CharField(max_length=200)
+    phone=models.IntegerField(default=0000)
+    details_of=models.ForeignKey(UserDetail, on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return self.address
+    
+    def addAddress(self):
+        self.save()
+
+    def get_address_by_id(id):
+        return ShippingAddresses.objects.filter(details_of=id)
