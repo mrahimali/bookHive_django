@@ -35,10 +35,17 @@
       <div class="modal-body">
         <form action="/profile/" method='POST'>
           {% csrf_token %}
-          
           <div class="mb-1">
-            <label for="address" class="form-label">Add Adress</label>
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" value="" name='name' id="name" placeholder='enter shipping address....' Required/>
+          </div>
+          <div class="mb-1">
+            <label for="address" class="form-label">Adress</label>
             <input type="text" class="form-control" value="" name='address' id="address" placeholder='enter shipping address....' Required/>
+          </div>
+          <div class="mb-1">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" value="" name='city' id="city" placeholder='enter shipping address....' Required/>
           </div>
           <div class="mb-1">
             <label for="phone" class="form-label">Phone Number</label>
@@ -71,10 +78,16 @@
           <div class="card me-2 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">{{forloop.counter}}. Address</h5>
+              <p class="card-text">{{address.name}}</p>
               <p class="card-text">{{address.address}}</p>
+              <p class="card-text">{{address.city}}</p>
               <p class="card-text">{{address.phone}}</p>
-              <a href="#" class="btn btn-success">Edit</a>
-              <a href="#" class="btn btn-danger">Delete</a>
+              <form action="delete-address/{{address.id}}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" >Delete</button>
+            </form>
+            
+
             </div>
           </div>
         {% endfor %}
@@ -118,8 +131,8 @@
               <td>{{book.description}}</td>
               <td>{{book.category}}</td>
               <td class='d-flex'>
-                  <a href="/edit-book/{{book.id}}"class='btn btn-primary me-3'>Edit</a>
-                  <a href=""class='btn btn-danger'>Delete</a>
+                  <a href="/edit-book/{{book.id}}" class='btn btn-primary me-3'>Edit</a>
+                  <a href="delete-book/{{book.id}}" class='btn btn-danger'>Delete</a>
               </td>
             </tr>
             {% endfor %}

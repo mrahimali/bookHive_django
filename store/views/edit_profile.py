@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
 from store.models import UserDetail
+from django.contrib import messages
 
 
 
@@ -35,9 +36,10 @@ class EditProfile(View):
             user.name=name
             user.email=email
             user.phone=phone
-            user.user_type=account_type
+            # user.user_type=account_type
             user.save()
             request.session['userEmail']=email
+            messages.success(request, 'Detail updated!!')
             return redirect('profile')
         else:
             data={
@@ -59,7 +61,7 @@ class EditProfile(View):
             error_message='Phone number required'
         elif len(filledValues.get('phone'))<10 or len(filledValues.get('phone'))>14:
             error_message="Invalid Phone number !!!"
-        elif not filledValues.get('account_type'):
-            error_message="Please select account type !!!"
+        # elif not filledValues.get('account_type'):
+        #     error_message="Please select account type !!!"
 
         return error_message

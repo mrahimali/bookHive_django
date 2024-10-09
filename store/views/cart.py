@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-from store.models import BookInfo
+from store.models import BookInfo, UserDetail, ShippingAddresses
 
 
 class Cart(View):
@@ -31,3 +31,19 @@ class Cart(View):
         print(request.session['cart'])
 
         return redirect('cart')
+    
+
+# class Checkout(View):
+#     def get(self , request):
+#         cart=request.session.get('cart')
+#         user_id=request.session['id']
+#         user=UserDetail.objects.get(id=user_id)
+#         adrresses= ShippingAddresses.objects.filter(details_of=user.id)
+#         ids=list(cart.keys())
+#         books=BookInfo.get_books_by_ids(ids)
+#         data={
+#             'books':books,
+#             'user':user,
+#             'address':adrresses
+#         }
+#         return render(request, 'checkout.html', data)

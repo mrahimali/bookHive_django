@@ -79,7 +79,9 @@ class BookInfo(models.Model):
 
 
 class ShippingAddresses(models.Model):
+    name=models.CharField(max_length=100, default="")
     address = models.CharField(max_length=200)
+    city=models.CharField(max_length=50, default='')
     phone=models.IntegerField(default=0000)
     details_of=models.ForeignKey(UserDetail, on_delete=models.CASCADE, default=1)
 

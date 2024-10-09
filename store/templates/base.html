@@ -39,6 +39,15 @@
           </div>
         </div>
     </nav>
+    <!-- base.html (or any template where you want to display the messages) -->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <div class="container alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     {% block content %}{% endblock %}
 
     <div class="card text-center">

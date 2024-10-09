@@ -3,7 +3,7 @@ from django.views import View
 from store.models import UserDetail
 from django.http import HttpResponse
 from django.contrib.auth.hashers import check_password
-
+from django.contrib import messages
 
 
 class Login(View):
@@ -28,7 +28,8 @@ class Login(View):
                 request.session['userName']=user.name
                 request.session['userEmail']=user.email
                 request.session['userPhone']=user.phone
-                request.session['userRole']=user.user_type
+                # request.session['userRole']=user.user_type
+                messages.success(request, 'Loggedin successfully.') 
                 return redirect('/')
             else:
                 error_message="password did not match"
