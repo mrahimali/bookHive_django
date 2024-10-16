@@ -18,7 +18,6 @@
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="/">Home</a>
               <a class="nav-link active" href="/profile/">Profile</a>
-              <a class="nav-link active" href="#">Your Order</a>
             </div>
           </div>
           <div class="float-end">
@@ -26,11 +25,11 @@
                 {% if request.session.cart %}
                 <a class="nav-link active" href="/cart/">Cart <span class='badge bg-info'>{{request.session.cart.keys|length}}</span></a>
                 {% endif %}
-                <a class="nav-link active" href="#">Orders</a>
+                <a class="nav-link active" href="/orders/">Orders</a>
                 
                 
                 {% if request.session.id%}
-                <a class="btn btn-outline-danger me-2" href="/logout/">logout - {{request.session.userName}}</a>
+                <a class="btn btn-outline-danger me-2" href="/logout/">logout</a>
                 {% else %}
                 <a class="btn btn-outline-success me-2" aria-current="page" href="/signup/">Signup</a>
                 <a class="btn btn-outline-info me-2" href="/login/">Login</a>
@@ -51,12 +50,14 @@
     {% block content %}{% endblock %}
 
     <div class="card text-center">
-      <div class="card-header">
-        MyE-Shop
+      <div class="card-header bg-dark text-white fs-3">
+        bookHive
       </div>
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <div class="card-body bg-secondary text-white">
+        <div class="container mx-5">
+          <p class="fs-6">“If you're not prepared to be wrong, you'll never come up with anything original.” &mdash; Ken Robinson</p>
+        </div>
+        <p class="fs-4">Developed By : Mohd Rahim Ali</p>
       </div>
       <div class="card-footer text-muted">
         Copright @ 2024 

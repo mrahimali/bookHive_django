@@ -9,10 +9,60 @@
             <p class="fs-1 ">Your Cart</p>
         </div>
         <div class='mt-4'>
-            <a href="" class='fs-6 float-end btn btn-info'>CheckOut</a>
+            <button type="button" class=" fs-6 float-end btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                CheckOut
+              </button>
             <p class="fs-5 float-end"> Grand Total - {{books|grandTotal:request.session.cart}} | &nbsp;</p>
         </div>
     </div>
+
+
+
+    <!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Select your shipping address</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <form action="/place-order/" method='POST'>
+                {% csrf_token %}
+                {% for address in addresses %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="selected_address" value="{{ address.id }}" 
+                            id="flexRadioDefault{{ address.id }}"
+                            {% if selected_address == address.id %} checked {% endif %}>
+                        <label class="form-check-label" for="flexRadioDefault{{ address.id }}">
+                            {{ address.name }}<br> 
+                            {{ address.address }}<br> 
+                            {{ address.city }}<br> 
+                            {{ address.phone }}
+                        </label>
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="float-end btn btn-success">Place Order</button>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href='/profile/#address' class="btn btn-primary">Add Shipping Adress</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+<!-- Modal End here -->
+
     <hr>
     <table class="table">
         <thead>
@@ -59,6 +109,7 @@
                 
             </td>
             <td>{{book.id|get_no_of_item:request.session.cart|total_price:book.price|price_symbol}}</td>
+
           </tr>
          {% endfor %}
           

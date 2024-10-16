@@ -5,12 +5,25 @@ from store.models import BookInfo, UserDetail, ShippingAddresses
 
 
 class Cart(View):
-    def get(self , request):
-        cart=request.session.get('cart')
-        ids=list(cart.keys())
-        books=BookInfo.get_books_by_ids(ids)
-        return render(request, 'cart.html', {'books':books})
-    
+    def get(self, request):
+        # Get the cart from the session
+        cart = request.session.get('cart', {})  
+        ids = list(cart.keys())
+        
+        if ids:
+            books = BookInfo.get_books_by_ids(ids)
+        else:
+            books = []
+        
+        user_id = request.session.get('id')  
+        if not user_id:
+            return redirect('login')
+
+        addresses = ShippingAddresses.objects.filter(details_of=user_id)
+        
+        return render(request, 'cart.html', {'books': books, 'addresses': addresses})
+
+
 
     def post(self, request):
         book_id = request.POST.get('book_id') or request.POST.get('increment') or request.POST.get('decrement')

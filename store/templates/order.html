@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% load cartFilter %}
+<div class="container my-5">
+  <div class="border card-body mx-auto">
+    
+    <div class='d-flex justify-content-between'>
+        <div>
+            <p class="fs-1 ">Your Ordered Books !!</p>
+        </div>
+    </div>
+
+    <hr>
+    {% if my_ordered_books %}
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Book</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Ordered By</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for book in my_ordered_books %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ book.product }}</td>
+                <td>{{ book.quantity }}</td>
+                <td>{{ book.price|price_symbol }}</td>
+                <td>{{ book.order.ordered_by.username }}</td> <!-- Access ordered_by to get username -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="fs-4 text-danger">None of your books ordered by any customer !!</p>
+    {% endif %}
+          
+</div>
+<hr>
+<div class="border card-body mx-auto">
+    <div class='d-flex justify-content-between'>
+        <div>
+            <p class="fs-1 ">Books Ordered by You !!</p>
+        </div>
+    </div>
+
+    <hr>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Book</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+         {% if purchased_books %}
+            {% for book in purchased_books %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ book.product }}</td>
+                <td>{{ book.quantity }}</td>
+                <td>{{ book.price}}</td>
+                <td>{{ book.product_owner.name }}</td> <!-- Display product owner's username -->
+            </tr>
+            {% endfor %}
+         {% else %}
+            <tr>
+                <td colspan="5" class="text-center">You have not purchased any books yet.</td>
+            </tr>
+         {% endif %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %}

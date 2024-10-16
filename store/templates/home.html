@@ -61,11 +61,17 @@
                                 </div>
                                 {% else %}
                                 <!-- Add to Cart Button -->
-                                <form action="/#{{book.id}}" method="POST" class="d-grid mt-3">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="book_id" value="{{book.id}}">
-                                    <input type="submit" class="btn btn-info text-white" value="Add to Cart">
-                                </form>
+                                 
+                                    {% if book.uploaded_by.id == request.session.id %}
+                                        <p class="fs-5">Your Book</p>
+                                    {% else %}
+                                        <form action="/#{{book.id}}" method="POST"  class="d-grid mt-3">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="book_id" value="{{ book.id }}">
+                                            <input type="submit" class="btn btn-info text-white" value="Add to Cart">
+                                        </form>
+                                    {% endif %}
+                            
                                 {% endif %}
                             </div>
                         </div>

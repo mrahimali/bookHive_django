@@ -54,6 +54,10 @@ class BookInfo(models.Model):
     uploaded_by=models.ForeignKey(UserDetail, on_delete=models.CASCADE, default=1)
 
 
+    def __str__(self):
+        return self.title
+
+
     def add_book(self):
         self.save()
 
@@ -93,3 +97,24 @@ class ShippingAddresses(models.Model):
 
     def get_address_by_id(id):
         return ShippingAddresses.objects.filter(details_of=id)
+
+
+class Order(models.Model):
+    ordered_by = models.ForeignKey(UserDetail, on_delete=models.CASCADE)
+    order_date = models.DateTimeField(auto_now_add=True)
+    is_paid = models.BooleanField(default=False)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    shipping_address = models.ForeignKey(ShippingAddresses, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"Order by {self.ordered_by.name}"
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(BookInfo, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    product_owner = models.ForeignKey(UserDetail, related_name='owned_books', on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    

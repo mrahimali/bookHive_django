@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% load cartFilter %}
+
+<div class="container my-5">
+    <div class="border card-body mx-auto text-center" style="width: 80%;">
+        <img src="{% static 'images/cofirm.png' %}" width='100px' alt="Order Confirmed" class="img-fluid mb-3">
+        <p class="fs-4">Your order has been confirmed!</p>
+        <p class="fs-5">Thank you for shopping with us!</p>
+        <a href="{% url 'homepage' %}" class="btn btn-primary">Return to Home</a>
+        {% comment %} <a href="{% url 'order_history' %}" class="btn btn-secondary">View Order History</a> {% endcomment %}
+    </div>
+</div>
+{% endblock %}
+
